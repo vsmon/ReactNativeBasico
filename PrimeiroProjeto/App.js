@@ -1,58 +1,41 @@
-import React, {Component} from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import React from 'react';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 
-class Campos extends Component{
+export default class App extends React.Component {
+
   constructor(props){
     super(props);
-    this.state = {rua:''};
+    this.state = {texto:''};
     
-    let {logradouro} = consultaCep('18022252'); 
-   
-    let texto = 'lasdflas';
-    ()=>{this.setState({rua:'texto'})};
+    this.mudarTexto = this.mudarTexto.bind(this);
+
+
+  }
+  mudarTexto(texto){
+    let s = this.state;
+    s.texto = texto;
+    this.setState(s);
     
   }
-  componentDidMount(){
-    ()=>{this.setState({rua:'asldfjklasj'})};
-  }
-  render(){
-    return(      
-      <View style={styles.container}>
-        <TextInput keyboardType='numeric' placeholder='Digite um Cep' />
-        <Text>CEP:</Text>
-        <Text>Rua:{this.state.rua}</Text>
-        <Text>UF:</Text>
-        <Text>Cidade:</Text>
-        <Button title="Consulta Cep" onPress={()=>this.setState({})}/>
-        
+
+  render() {
+    return (
+      <View style={{paddingTop:40}}>      
+        <TextInput style={styles.input} onChangeText={this.mudarTexto}/>
+        <Text style={{textAlign:'center'}}>{this.state.texto}</Text>
       </View>
     );
   }
-    
 }
 
-export default class App extends React.Component {
-  render() {
-    return (
-      <Campos/>
-    );
+const styles = StyleSheet.create(
+  {
+    input:{
+      height:40,
+      margin:20,
+      borderColor:"#000000",
+      borderWidth:1
+    }
   }
-}
+)
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
-async function consultaCep(pCep){
-  /* viacep.com.br/ws/01001000/json/  */
-  const url = `https://viacep.com.br/ws/${pCep}/json/`;
-  const resposta = await fetch(url);
-  const json = await resposta.json();
-  console.log(json);
-  return json;
-}
