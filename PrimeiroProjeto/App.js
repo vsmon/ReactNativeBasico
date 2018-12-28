@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
 
 export default class App extends React.Component {
 
@@ -7,22 +7,27 @@ export default class App extends React.Component {
     super(props);
     this.state = {texto:''};
     
-    this.mudarTexto = this.mudarTexto.bind(this);
-
+    /* this.mudarTexto = this.mudarTexto.bind(this); */
 
   }
-  mudarTexto(texto){
+/*   mudarTexto(t){
     let s = this.state;
-    s.texto = texto;
+    s.texto = t;
     this.setState(s);
     
-  }
+  } */
 
   render() {
     return (
-      <View style={{paddingTop:40}}>      
-        <TextInput style={styles.input} onChangeText={this.mudarTexto}/>
-        <Text style={{textAlign:'center'}}>{this.state.texto}</Text>
+      <View style={{paddingTop:40}}> 
+        <TextInput style={styles.input} 
+        onChangeText={(texto)=>this.setState({texto:texto})}        
+        />
+        <Button title='Botao' onPress={()=>{
+          let teste = this.state.texto
+          console.log(teste)}}/>
+        <Text style={{textAlign:'center'}}>{teste}</Text>
+        
       </View>
     );
   }
